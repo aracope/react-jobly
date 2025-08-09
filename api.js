@@ -21,9 +21,7 @@ class JoblyApi {
     //this has been provided to show you another way to pass the token. you are only expected to read this code for this project.
     const url = `${BASE_URL}/${endpoint}`;
     const headers = { Authorization: `Bearer ${JoblyApi.token}` };
-    const params = (method === "get")
-        ? data
-        : {};
+    const params = method === "get" ? data : {};
 
     try {
       return (await axios({ url, method, data, params, headers })).data;
@@ -43,10 +41,56 @@ class JoblyApi {
     return res.company;
   }
 
-  // obviously, you'll add a lot here ...
+  static async getCompanies(filters = {}) {
+    let res = await this.request("companies", filters);
+    return res.companies;
+  }
+
+  /** Job APIs */
+
+  static async getJob(id) {
+    let res = await this.request(`jobs/${id}`);
+    return res.job;
+  }
+
+  static async getJobs(filters = {}) {
+    let res = await this.request("jobs", filters);
+    return res.jobs;
+  }
+
+  /** User APIs */
+
+  static async login(credentials) {
+    // credentials = { username, password }
+    let res = await this.request("auth/token", credentials, "post");
+    return res.token;
+  }
+
+  static async signup(data) {
+    // data = { username, password, firstName, lastName, email }
+    let res = await this.request("auth/register", data, "post");
+    return res.token;
+  }
+
+  static async getCurrentUser(username) {
+    let res = await this.request(`users/${username}`);
+    return res.user;
+  }
+
+  static async updateUser(username, data) {
+    let res = await this.request(`users/${username}`, data, "patch");
+    return res.user;
+  }
+
+  /** Job Application API */
+
+  static async applyToJob(username, jobId) {
+    await this.request(`users/${username}/jobs/${jobId}`, {}, "post");
+  }
 }
 
 // for now, put token ("testuser" / "password" on class)
-JoblyApi.token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZ" +
-    "SI6InRlc3R1c2VyIiwiaXNBZG1pbiI6ZmFsc2UsImlhdCI6MTU5ODE1OTI1OX0." +
-    "FtrMwBQwe6Ue-glIFgz_Nf8XxRT2YecFCiSpYL0fCXc";
+JoblyApi.token =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZ" +
+  "SI6InRlc3R1c2VyIiwiaXNBZG1pbiI6ZmFsc2UsImlhdCI6MTU5ODE1OTI1OX0." +
+  "FtrMwBQwe6Ue-glIFgz_Nf8XxRT2YecFCiSpYL0fCXc";
