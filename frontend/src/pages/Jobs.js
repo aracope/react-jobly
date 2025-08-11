@@ -37,6 +37,7 @@ function Jobs() {
       <h1>Jobs</h1>
       {jobs.map((job) => (
         <JobCard key={job.id} job={job} />
+        
       ))}
     </div>
   );
