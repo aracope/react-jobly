@@ -25,7 +25,7 @@ function Login({ login }) {
     const res = await login(formData);
     if (res.success) {
       // go home after login
-      navigate("/"); 
+      navigate("/");
     } else {
       setErrors(res.errors);
     }
@@ -36,8 +36,9 @@ function Login({ login }) {
       <h2>Log In</h2>
       <form onSubmit={handleSubmit}>
         <div className="mb-2">
-          <label>Username</label>
+          <label htmlFor="username">Username</label>
           <input
+            id="username"
             className="form-control"
             name="username"
             value={formData.username}
@@ -45,8 +46,9 @@ function Login({ login }) {
           />
         </div>
         <div className="mb-2">
-          <label>Password</label>
+          <label htmlFor="password">Password</label>
           <input
+            id="password"
             className="form-control"
             type="password"
             name="password"
