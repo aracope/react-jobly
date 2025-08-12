@@ -27,3 +27,9 @@ describe("config can come from env", function () {
   });
 })
 
+
+
+
+const { user } = useContext(UserContext);
+
+if (!user) return null; // or a disabled button/loading state
