@@ -8,8 +8,8 @@ require("colors");
 // Use dev database, testing database, or via env var, production database
 function getDatabaseUri() {
   return process.env.NODE_ENV === "test"
-    ? process.env.TEST_DATABASE_URL
-    : process.env.DATABASE_URL;
+    ? process.env.TEST_DATABASE_URL || "jobly_test"
+    : process.env.DATABASE_URL || "jobly";
 }
 
 // Speed up bcrypt during tests, since the algorithm safety isn't being tested
@@ -28,4 +28,3 @@ module.exports = {
   BCRYPT_WORK_FACTOR,
   getDatabaseUri,
 };
-

@@ -21,7 +21,9 @@ describe("config can come from env", function () {
     expect(config.getDatabaseUri()).toEqual("jobly");
     process.env.NODE_ENV = "test";
 
-    expect(config.getDatabaseUri()).toEqual("jobly_test");
+    // Use the actual env var if set, else fallback to "jobly_test"
+    const expectedTestDb = process.env.TEST_DATABASE_URL || "jobly_test";
+    expect(config.getDatabaseUri()).toEqual(expectedTestDb);
   });
 })
 
